@@ -1,0 +1,32 @@
+{
+  "slides": [
+    {
+      "introline": "English",
+      "id": "English"
+    },
+    {
+      "introline": "French",
+      "id": "French"
+    },
+    {
+      "introline": "Spanish",
+      "id": "Spanish"
+    },
+    {
+      "introline": "Russian",
+      "id": "Russian"
+    },
+    {
+      "introline": "Portuguese",
+      "id": "Portuguese"
+    },
+    {
+      "introline": "German",
+      "id": "German"
+    },
+    {
+      "introline": "Italian",
+      "id": "Italian"
+    }
+  ]
+}
