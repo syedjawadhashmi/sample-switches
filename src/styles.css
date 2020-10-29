@@ -76,6 +76,24 @@ button {
     padding-right: 8px;
 }
 
+.upText {
+    font-size: 18px;
+    background-color: var(--darkGrey);
+    z-index: 1;
+    padding-left: 8px;
+    padding-right: 8px;
+    transform: rotate3d(-1, 0, 0, 0.64rad);
+}
+
+.downText {
+    font-size: 18px;
+    background-color: var(--darkGrey);
+    z-index: 1;
+    padding-left: 8px;
+    padding-right: 8px;
+    transform: rotate3d(1, 0, 0, 0.54rad);
+}
+
 .carousel-item.visible {
     opacity: 1;
 }
@@ -113,11 +131,12 @@ button {
     justify-content: flex-start;
     flex-direction: column;
     align-items: center;
+    transform: scale(1);
 }
 
 .mode {
     color: var(--white);
-    margin-top: -13px;
+    margin-top: 13px;
     background-color: var(--darkGrey);
     font-family: "DIN Pro";
     width: 80px;
@@ -155,9 +174,22 @@ button {
 
 /* Volume Component */
 
+.volumeContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    transform: scale(1);
+}
+
+.volumeText {
+    color: white;
+}
+
 .volumeBox {
-    height: 410px;
-    margin-left: 50px;
+    height: 510px;
+    margin-top: 50px;
+    margin-bottom: 20px;
     width: 70px;
     align-items: center;
     justify-content: center;
@@ -200,7 +232,7 @@ button {
     flex-direction: column;
     justify-content: space-between;
     display: flex;
-    height: 405px;
+    height: 505px;
     margin-left: -12px;
 }
 
@@ -212,7 +244,7 @@ button {
 
 .line {
     width: 8px;
-    height: 405px;
+    height: 505px;
     background-color: var(--darkerGrey);
 }
 
@@ -253,6 +285,7 @@ button {
     align-items: center;
     margin-left: 10px;
     padding: 0 5px;
+    transform: scale(1);
 }
 
 .barBoxsubmix {
@@ -295,7 +328,9 @@ button {
 /* Resonance */
 
 .resonanceBox {
-    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    transform: scale(1);
 }
 
 .backRound {
@@ -327,9 +362,9 @@ button {
     background: url(./assets/images/round-g.png);
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
-    width: 50px;
-    height: 50px;
+    background-size: 50%;
+    width: 150px;
+    height: 150px;
     margin-top: -1px;
     margin-left: -2px;
 }
@@ -341,6 +376,7 @@ button {
     display: flex;
     align-items: center;
     flex-direction: column;
+    transform: scale(1);
 }
 
 .focus-outer-container {
@@ -397,10 +433,9 @@ button {
     background-color: var(--lightBlack);
     margin-bottom: 10px;
     transform: rotate(180deg);
-  
 }
 
-.languagesBlackBoxInner{
+.languagesBlackBoxInner {
     display: flex;
     align-items: flex-start;
     flex-direction: row;
@@ -410,10 +445,9 @@ button {
 
 .languagesBox {
     height: 300px;
-    margin-left: 10px;
-    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
     border-radius: 50px;
-    width: 370px;
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -421,6 +455,7 @@ button {
     background-color: transparent;
     border: 1px solid var(--white);
     padding-bottom: 15px;
+    transform: scale(1);
 }
 
 .languagesBarBox {
@@ -505,22 +540,40 @@ button {
     width: 60%;
 }
 
-.languageText{
+.languageText {
     color: white;
     margin-bottom: 20px;
     cursor: pointer;
 }
 
-.languageLine{
+.languageLine {
     width: 60%;
     height: 2px;
     margin-top: 2px;
 }
 
-.enDiv{
+.enDiv {
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
+}
+
+/* Resonance new */
+
+#drag-container_CircularGaugeBorder {
+    fill: transparent !important;
+    /* width: 150px !important;
+    height: 150px !important; */
+}
+
+#drag-container_svg {
+    /* width: 150px !important;
+    height: 150px !important; */
+}
+
+#drag-container_GaugeAreaClipRect__Rect {
+    /* width: 150px !important;
+    height: 150px !important; */
 }

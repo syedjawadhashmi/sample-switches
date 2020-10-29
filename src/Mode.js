@@ -1,119 +1,137 @@
-import React, { useState, useEffect } from "react";
+import React, { Component } from "react";
 import cn from "classnames";
 import "./styles.css";
 
-const Mode = ({ data }) => {
-    const [activeIndex, setActiveIndex] = useState(0);
+class Mode extends Component {
+    halfwayIndex = Math.ceil(this.props.data.length / 2);
 
-    const halfwayIndex = Math.ceil(data.length / 2);
+    itemHeight = 52;
 
-    const itemHeight = 52;
+    shuffleThreshold = this.halfwayIndex * this.itemHeight;
 
-    const shuffleThreshold = halfwayIndex * itemHeight;
+    visibleStyleThreshold = this.shuffleThreshold / 2;
+    constructor(props) {
+        super(props);
+        this.state = { activeIndex: 0 };
+    }
 
-    const visibleStyleThreshold = shuffleThreshold / 2;
-
-    const determinePlacement = (itemIndex) => {
+    determinePlacement = (itemIndex) => {
+        const { activeIndex } = this.state
         if (activeIndex === itemIndex) return 0;
 
-        if (itemIndex >= halfwayIndex) {
-            if (activeIndex > itemIndex - halfwayIndex) {
-                return (itemIndex - activeIndex) * itemHeight;
+        if (itemIndex >= this.halfwayIndex) {
+            if (activeIndex > itemIndex - this.halfwayIndex) {
+                return (itemIndex - activeIndex) * this.itemHeight;
             } else {
-                return -(data.length + activeIndex - itemIndex) * itemHeight;
+                return -(this.props.data.length + activeIndex - itemIndex) * this.itemHeight;
             }
         }
 
         if (itemIndex > activeIndex) {
-            return (itemIndex - activeIndex) * itemHeight;
+            return (itemIndex - activeIndex) * this.itemHeight;
         }
 
         if (itemIndex < activeIndex) {
-            if ((activeIndex - itemIndex) * itemHeight >= shuffleThreshold) {
-                return (data.length - (activeIndex - itemIndex)) * itemHeight;
+            if ((activeIndex - itemIndex) * this.itemHeight >= this.shuffleThreshold) {
+                return (this.props.data.length - (activeIndex - itemIndex)) * this.itemHeight;
             }
-            return -(activeIndex - itemIndex) * itemHeight;
+            return -(activeIndex - itemIndex) * this.itemHeight;
         }
     };
 
-    const handleClick = (direction) => {
-        setActiveIndex((prevIndex) => {
-            if (direction === "next") {
-                if (prevIndex + 1 > data.length - 1) {
-                    return 0;
-                }
-                return prevIndex + 1;
+    handleClick = (direction) => {
+        if (direction === "next") {
+            if (this.state.activeIndex + 1 > this.props.data.length - 1) {
+                this.setState({
+                    activeIndex: 0
+                })
+                return
             }
+            this.setState({
+                activeIndex: this.state.activeIndex + 1
+            })
+            return
+        }
 
-            if (prevIndex - 1 < 0) {
-                return data.length - 1;
-            }
+        if (this.state.activeIndex - 1 < 0) {
+            this.setState({
 
-            return prevIndex - 1;
-        });
+                activeIndex: this.props.data.length - 1
+            })
+            return
+        }
+        this.setState({
+            activeIndex: this.state.activeIndex - 1
+        })
     };
 
 
-    const handleKeyDown = React.useCallback(event => {
+    handleKeyDown = (event) => {
         const { key } = event
-        if (key === 'ArrowDown') {
-            handleClick('next')
+        if (key === 'ArrowDown' && this.props.mode) {
+            this.handleClick('next')
         }
-    }, [])
+    }
 
-    const handleKeyUp = React.useCallback(event => {
+    handleKeyUp = (event) => {
         const { key } = event
-        if (key === 'ArrowUp') {
-            handleClick('prev')
+        if (key === 'ArrowUp' && this.props.mode) {
+            this.handleClick('prev')
         }
-    }, [])
+    }
 
-    useEffect(() => {
-        document.addEventListener('keydown', handleKeyDown)
-        document.addEventListener('keyup', handleKeyUp)
 
-        return () => {
-            document.removeEventListener('keydown', handleKeyDown)
-            document.removeEventListener('keyup', handleKeyUp)
-        }
-    }, [handleKeyDown, handleKeyUp]);
+    componentDidMount() {
+        document.addEventListener('keydown', this.handleKeyDown)
+        document.addEventListener('keyup', this.handleKeyUp)
+    }
 
-    return (
-        <section className="outer-container">
-            <div className="carousel-wrapper">
-                <div className="carousel">
-                    <div className="slides">
+    setActiveIndexValue = (i) => {
+        this.setState({ activeIndex: i })
+        this.props.modeChange(true)
+    }
 
-                        <div className="carousel-inner">
-                            {data.map((item, i) => (
-                                <button
-                                    type="button"
-                                    onClick={() => setActiveIndex(i)}
-                                    className={cn("carousel-item", {
-                                        active: activeIndex === i,
-                                        visible:
-                                            Math.abs(determinePlacement(i)) <= visibleStyleThreshold
-                                    })}
-                                    key={item.id}
-                                    style={{
-                                        transform: `translateY(${determinePlacement(i)}px)`,
-                                        marginTop: determinePlacement(i) === 52 ? -20 : determinePlacement(i) === -52 ? 0 : -10
-                                    }}
-                                >
-                                    <div className={determinePlacement(i) === -52 ? "horizontalLineUpUpper" : ""} />
-                                    <span className={"text"}>
-                                        {item.introline.toUpperCase()}
-                                    </span>
-                                    <div className={determinePlacement(i) === 52 ? "horizontalLineTextDown" : determinePlacement(i) === -52 ? "horizontalLineTextUp" : "horizontalLineText"} />
-                                    <div className={determinePlacement(i) === 52 ? "horizontalLineDown" : determinePlacement(i) === -52 ? "horizontalLineUp" : "horizontalLine"} />
-                                </button>
-                            ))}
+    render() {
+
+        const { data } = this.props
+        console.log('activeIndex', this.state.activeIndex)
+        return (
+            <div className="outer-container">
+                <div className="carousel-wrapper">
+                    <div className="carousel">
+                        <div className="slides">
+
+                            <div className="carousel-inner">
+                                {data.map((item, i) => (
+                                    <button
+                                        type="button"
+                                        onClick={() => this.setActiveIndexValue(i)}
+                                        className={cn("carousel-item", {
+                                            active: this.state.activeIndex === i,
+                                            visible:
+                                                Math.abs(this.determinePlacement(i)) <= this.visibleStyleThreshold
+                                        })}
+                                        key={item.id}
+                                        style={{
+                                            transform: `translateY(${this.determinePlacement(i)}px)`,
+                                            marginTop: this.determinePlacement(i) === 52 ? -20 : this.determinePlacement(i) === -52 ? 0 : -10
+                                        }}
+                                    >
+                                        <div className={this.determinePlacement(i) === -52 ? "horizontalLineUpUpper" : ""} />
+                                        <span className={this.determinePlacement(i) === 52 ? "downText" : this.determinePlacement(i) === -52 ? "upText" : "text"}>
+                                            {item.introline.toUpperCase()}
+                                        </span>
+                                        <div className={this.determinePlacement(i) === 52 ? "horizontalLineTextDown" : this.determinePlacement(i) === -52 ? "horizontalLineTextUp" : "horizontalLineText"} />
+                                        <div className={this.determinePlacement(i) === 52 ? "horizontalLineDown" : this.determinePlacement(i) === -52 ? "horizontalLineUp" : "horizontalLine"} />
+                                    </button>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    );
+        );
+    };
 };
 
 

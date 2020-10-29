@@ -1,186 +1,191 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import { Range } from 'react-range';
 import "./styles.css";
 
 
-const Languages = ({ }) => {
-    const [state, setState] = useState({
-        value: [5],
-        EN: [],
-        DE: [],
-        RU: [],
-        language: 'en'
-    })
+class Languages extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            value: [0],
+            EN: [],
+            DE: [],
+            RU: [],
+            language: 'en'
+        };
+    }
 
-    const pushinArray = () => {
-        if (state.language === 'en') {
+    pushinArray = () => {
+        if (this.state.language === 'en') {
 
-            for (var i = 0; i < state.value[0]; i++) {
-                if (i > state.EN.length) {
-                    setState(prevState => ({
+            for (var i = 0; i < this.state.value[0]; i++) {
+                if (i > this.state.EN.length) {
+                    this.setState(prevState => ({
                         ...prevState,
                         EN: [...prevState.EN, i]
                     }))
                 } else {
-                    state.EN.pop()
-                    setState(prevState => ({
+                    this.state.EN.pop()
+                    this.setState(prevState => ({
                         ...prevState,
-                        EN: state.EN
+                        EN: this.state.EN
                     }))
                 }
             }
         }
-        else if (state.language === 'de') {
+        else if (this.state.language === 'de') {
 
-            for (var i = 0; i < state.value[0]; i++) {
-                if (i > state.DE.length) {
-                    setState(prevState => ({
+            for (var i = 0; i < this.state.value[0]; i++) {
+                if (i > this.state.DE.length) {
+                    this.setState(prevState => ({
                         ...prevState,
                         DE: [...prevState.DE, i]
                     }))
                 } else {
-                    state.DE.pop()
-                    setState(prevState => ({
+                    this.state.DE.pop()
+                    this.setState(prevState => ({
                         ...prevState,
-                        DE: state.DE
+                        DE: this.state.DE
                     }))
                 }
             }
         }
-        else if (state.language === 'ru') {
+        else if (this.state.language === 'ru') {
 
-            for (var i = 0; i < state.value[0]; i++) {
-                if (i > state.RU.length) {
-                    setState(prevState => ({
+            for (var i = 0; i < this.state.value[0]; i++) {
+                if (i > this.state.RU.length) {
+                    this.setState(prevState => ({
                         ...prevState,
                         RU: [...prevState.RU, i]
                     }))
                 } else {
-                    state.RU.pop()
-                    setState(prevState => ({
+                    this.state.RU.pop()
+                    this.setState(prevState => ({
                         ...prevState,
-                        RU: state.RU
+                        RU: this.state.RU
                     }))
                 }
             }
         }
     }
 
-    const selectLanguage = (language) => {
-        setState(prevState => ({
-            ...prevState,
+    selectLanguage = (language) => {
+        this.setState({
             language: language
-        }))
+        })
     }
-    return (
-        <div className={'languagesBox'}>
-            <div className={'languagesBlackBox'}>
-                <div className={'languagesBlackBoxInner'}>
-                    <div className={'enDiv'}>
-                        {
-                            state.RU && state.RU.map((item, index) => {
-                                return (
-                                    <div className={'languageLine'} style={{ backgroundColor: '#f0ac3f' }} />
-                                )
-                            })
-                        }
-                    </div>
-                    <div className={'enDiv'}>
-                        {
-                            state.DE && state.DE.map((item, index) => {
-                                return (
-                                    <div className={'languageLine'} style={{ backgroundColor: '#17939f' }} />
-                                )
-                            })
-                        }
-                    </div>
-                    <div className={'enDiv'}>
-                        {
-                            state.EN && state.EN.map((item, index) => {
-                                return (
-                                    <div className={'languageLine'} style={{ backgroundColor: '#a8b911' }} />
-                                )
-                            })
-                        }
+    render() {
+        return (
+            <div className={'languagesBox'}>
+                <div className={'languagesBlackBox'}>
+                    <div className={'languagesBlackBoxInner'}>
+                        <div className={'enDiv'}>
+                            {
+                                this.state.RU && this.state.RU.map((item, index) => {
+                                    return (
+                                        <div className={'languageLine'} style={{ backgroundColor: '#f0ac3f' }} />
+                                    )
+                                })
+                            }
+                        </div>
+                        <div className={'enDiv'}>
+                            {
+                                this.state.DE && this.state.DE.map((item, index) => {
+                                    return (
+                                        <div className={'languageLine'} style={{ backgroundColor: '#17939f' }} />
+                                    )
+                                })
+                            }
+                        </div>
+                        <div className={'enDiv'}>
+                            {
+                                this.state.EN && this.state.EN.map((item, index) => {
+                                    return (
+                                        <div className={'languageLine'} style={{ backgroundColor: '#a8b911' }} />
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className={'languageTextdiv'}>
-                <div style={{ fontWeight: state.language === "en" ? 'bold' : 'normal' }} onClick={() => selectLanguage("en")} className={"languageText"}>EN</div>
-                <div style={{ fontWeight: state.language === "de" ? 'bold' : 'normal' }} onClick={() => selectLanguage("de")} className={"languageText"}>DE</div>
-                <div style={{ fontWeight: state.language === "ru" ? 'bold' : 'normal' }} onClick={() => selectLanguage("ru")} className={"languageText"}>RU</div>
-            </div>
-            <div className={"languagesBarBox"}>
-                <div className={"languagesFullBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesFullBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesHalfBar"} />
-                <div className={"languagesFullBar"} />
-            </div>
-            <div className={'languagesLineBox'}>
-                <div className={'languagesLine'} />
-                <div className={'languagesSquareboxDiv'}>
-                    <div className={'languagesSquarebox'} />
-                    <div className={'languagesSquarebox'} />
-                    <div className={'languagesSquarebox'} />
+                <div className={'languageTextdiv'}>
+                    <div style={{ fontWeight: this.state.language === "en" ? 'bold' : 'normal' }} onClick={() => this.selectLanguage("en")} className={"languageText"}>EN</div>
+                    <div style={{ fontWeight: this.state.language === "de" ? 'bold' : 'normal' }} onClick={() => this.selectLanguage("de")} className={"languageText"}>DE</div>
+                    <div style={{ fontWeight: this.state.language === "ru" ? 'bold' : 'normal' }} onClick={() => this.selectLanguage("ru")} className={"languageText"}>RU</div>
                 </div>
+                <div className={"languagesBarBox"}>
+                    <div className={"languagesFullBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesFullBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesHalfBar"} />
+                    <div className={"languagesFullBar"} />
+                </div>
+                <div className={'languagesLineBox'}>
+                    <div className={'languagesLine'} />
+                    <div className={'languagesSquareboxDiv'}>
+                        <div className={'languagesSquarebox'} />
+                        <div className={'languagesSquarebox'} />
+                        <div className={'languagesSquarebox'} />
+                    </div>
+                </div>
+                <Range
+                    step={1}
+                    min={0}
+                    max={38}
+                    direction={'to right'}
+                    values={this.state.value}
+                    onChange={(value) => {
+                        this.props.modeChange(false)
+                        this.setState({ value: value })
+                        this.pushinArray()
+                    }}
+                    renderTrack={({ props, children }) => (
+                        <div
+                            {...props}
+                            style={{
+                                ...props.style,
+                                height: '30px',
+                                marginLeft: -10,
+                                marginTop: -25,
+                                width: 220,
+                                backgroundColor: 'transparent'
+                            }}
+                        >
+                            {children}
+                        </div>
+                    )}
+                    renderThumb={({ props }) => (
+                        <div
+                            {...props}
+                            className={'languagesController'}
+                        >
+                            <div className={"languagesHorizontalLine"} style={{ height: 37 }} />
+                            <div className={"languagesHorizontalLine"} style={{ height: 39 }} />
+                            <div className={"languagesHorizontalLinebold"} />
+                            <div className={"languagesHorizontalLine"} style={{ height: 39 }} />
+                            <div className={"languagesHorizontalLine"} style={{ height: 37 }} />
+                        </div>
+                    )}
+                />
             </div>
-            <Range
-                step={1}
-                min={0}
-                max={35}
-                direction={'to right'}
-                values={state.value}
-                onChange={(value) => {
-                    setState(prevState => ({ ...prevState, value: value }))
-                    pushinArray()
-                }}
-                renderTrack={({ props, children }) => (
-                    <div
-                        {...props}
-                        style={{
-                            ...props.style,
-                            height: '30px',
-                            marginLeft: -10,
-                            marginTop: -25,
-                            width: 220,
-                            backgroundColor: 'transparent'
-                        }}
-                    >
-                        {children}
-                    </div>
-                )}
-                renderThumb={({ props }) => (
-                    <div
-                        {...props}
-                        className={'languagesController'}
-                    >
-                        <div className={"languagesHorizontalLine"} style={{ height: 37 }} />
-                        <div className={"languagesHorizontalLine"} style={{ height: 39 }} />
-                        <div className={"languagesHorizontalLinebold"} />
-                        <div className={"languagesHorizontalLine"} style={{ height: 39 }} />
-                        <div className={"languagesHorizontalLine"} style={{ height: 37 }} />
-                    </div>
-                )}
-            />
-        </div>
-    );
+        );
+    };
 };
 
 
