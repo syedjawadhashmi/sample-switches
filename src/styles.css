@@ -369,6 +369,10 @@ button {
     margin-left: -2px;
 }
 
+#drag-container>#drag-container_svg{
+    position: inherit;
+}
+
 /* Focus */
 
 .focus-container {
